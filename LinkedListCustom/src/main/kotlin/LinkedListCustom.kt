@@ -2,8 +2,8 @@ package org.example
 
 class LinkedListCustom<T> {
 
-    private var head: T? = null;
-    private var headNext: LinkedListCustom<T>? = null;
+    var head: T? = null;
+    var headNext: LinkedListCustom<T>? = null;
 
     fun isEmpty(): Boolean {
         return head == null;
