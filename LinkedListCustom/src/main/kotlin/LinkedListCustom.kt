@@ -21,62 +21,84 @@ class LinkedListCustom<T> {
         }
     }
 
+    //Adds to beginning
     fun push(value: T) {
-        val temp = LinkedListCustom<T>().apply {
-            head = this@LinkedListCustom.head
-            headNext = this@LinkedListCustom.headNext
-        }
-        head = value
-        headNext = temp
+        val newNode = Node(value)
+        newNode.next = head
+        head = newNode
     }
 
+    //Adds on index
     fun insert(value: T, index: Int) {
+
+        if (index > size()) {
+            throw IndexOutOfBoundsException("Index out of bounds")
+        }
+
         if (index == 0) {
             push(value)
         } else {
-            var current: LinkedListCustom<T>? = this
+            var current = head
             for (i in 0 until index - 1) {
-                current = current?.headNext
+                if (current == null) {
+                    throw IndexOutOfBoundsException("Index out of bounds")
+                }
+                current = current.next
             }
-            val temp = LinkedListCustom<T>().apply { head = value }
-            temp.headNext = current?.headNext
-            current?.headNext = temp
+            val newNode = Node(value)
+            newNode.next = current?.next
+            current?.next = newNode
         }
     }
 
+    //Display the list
     fun display() {
-        var current: LinkedListCustom<T>? = this;
-        while (current?.head != null) {
-            print("${current.head} -> " );
-            current = current.headNext;
+        var current = head
+        while (current != null) {
+            print("${current.data} -> " );
+            current = current.next;
         }
         println("Done");
     }
 
+    //Deletes value from list
     fun delete(value: T) {
-        if (head == value) {
-            head = headNext?.head
-            headNext = headNext?.headNext
-        } else {
-            var current: LinkedListCustom<T>? = this
-            while (current?.headNext != null) {
-                if (current.headNext?.head == value) {
-                    current.headNext = current.headNext?.headNext
-                    break
-                }
-                current = current.headNext
-                }
-            }
+        if (head?.data == value) {
+            head = head?.next
+            return
         }
 
-    fun size() {
-        var counter: Int = 0
-        var current: LinkedListCustom<T>? = this
+        var current = head
+        while (current?.next != null) {
+            if (current.next?.data == value) {
+                current.next = current.next?.next
+                return
+            }
+            current = current.next
+        }
+    }
 
-        while (current?.head != null) {
+    //Size of the list
+    fun size(): Int {
+        var counter: Int = 0
+        var current = head
+
+        while (current != null) {
             counter++
-            current = current.headNext
+            current = current.next
         }
         println("Size: $counter")
+        return counter
+    }
+
+    override fun toString(): String {
+        val stringBuilder = StringBuilder()
+        var current = head
+        while (current != null) {
+            stringBuilder.append("${current.data} -> ")
+            current = current.next
+        }
+        stringBuilder.append("Done")
+        return stringBuilder.toString()
     }
 }
