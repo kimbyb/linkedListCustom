@@ -2,22 +2,22 @@ package org.example
 
 class LinkedListCustom<T> {
 
-    var head: T? = null;
-    var headNext: LinkedListCustom<T>? = null;
+    private var head: Node<T>? = null
 
     fun isEmpty(): Boolean {
         return head == null;
     }
 
     fun add(value: T) {
+        val newNode = Node(value)
         if (head == null) {
-            head = value
+            head = newNode
         } else {
-            var current: LinkedListCustom<T> = this
-            while (current.headNext != null) {
-                current = current.headNext!!
+            var current = head
+            while (current?.next != null) {
+                current = current.next
             }
-            current.headNext = LinkedListCustom<T>().apply { head = value }
+            current?.next = newNode
         }
     }
 
