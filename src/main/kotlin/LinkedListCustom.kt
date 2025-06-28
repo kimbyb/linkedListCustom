@@ -1,14 +1,24 @@
 package org.example
 
-class LinkedListCustom<T> {
+import javax.swing.Action
+
+class LinkedListCustom<T> : LinkedListInterface<T> {
 
     private var head: Node<T>? = null
 
-    fun isEmpty(): Boolean {
+    private fun forEach(action: (Node<T>) -> Unit) {
+        var current = head
+        while (current != null) {
+            action(current)
+            current = current.next
+        }
+    }
+
+    override fun isEmpty(): Boolean {
         return head == null;
     }
 
-    fun add(value: T) {
+    override fun add(value: T) {
         val newNode = Node(value)
         if (head == null) {
             head = newNode
@@ -22,19 +32,17 @@ class LinkedListCustom<T> {
     }
 
     //Adds to beginning
-    fun push(value: T) {
+    override fun push(value: T) {
         val newNode = Node(value)
         newNode.next = head
         head = newNode
     }
 
     //Adds on index
-    fun insert(value: T, index: Int) {
-
+    override fun insert(value: T, index: Int) {
         if (index > size()) {
             throw IndexOutOfBoundsException("Index out of bounds")
         }
-
         if (index == 0) {
             push(value)
         } else {
@@ -52,22 +60,18 @@ class LinkedListCustom<T> {
     }
 
     //Display the list
-    fun display() {
+    override fun display() {
         var current = head
-        while (current != null) {
-            print("${current.data} -> " );
-            current = current.next;
-        }
+        forEach { print("${it.data} -> ") }
         println("Done");
     }
 
     //Deletes value from list
-    fun delete(value: T) {
+    override fun delete(value: T) {
         if (head?.data == value) {
             head = head?.next
             return
         }
-
         var current = head
         while (current?.next != null) {
             if (current.next?.data == value) {
@@ -79,14 +83,11 @@ class LinkedListCustom<T> {
     }
 
     //Size of the list
-    fun size(): Int {
+    override fun size(): Int {
         var counter: Int = 0
         var current = head
 
-        while (current != null) {
-            counter++
-            current = current.next
-        }
+        forEach { counter++ }
         println("Size: $counter")
         return counter
     }
@@ -94,10 +95,7 @@ class LinkedListCustom<T> {
     override fun toString(): String {
         val stringBuilder = StringBuilder()
         var current = head
-        while (current != null) {
-            stringBuilder.append("${current.data} -> ")
-            current = current.next
-        }
+        forEach { stringBuilder.append("${current?.data} -> ") }
         stringBuilder.append("Done")
         return stringBuilder.toString()
     }
