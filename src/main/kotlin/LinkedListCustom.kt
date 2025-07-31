@@ -1,7 +1,5 @@
 package org.example
 
-import javax.swing.Action
-
 class LinkedListCustom<T> : LinkedListInterface<T> {
 
     private var head: Node<T>? = null
@@ -81,6 +79,24 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             current = current.next
         }
     }
+
+    fun deleteLast() {
+        if (head == null) {
+            return
+        }
+
+        if (head?.next == null) {
+            head = null
+            return
+        }
+
+        var current = head
+        while (current?.next?.next != null) {
+            current = current.next
+        }
+        current?.next = null
+    }
+
 
     //Size of the list
     override fun size(): Int {
