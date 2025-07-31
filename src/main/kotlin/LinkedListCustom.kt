@@ -84,19 +84,22 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
 
     //Size of the list
     override fun size(): Int {
-        var counter: Int = 0
+        var counter = 0
         var current = head
 
-        forEach { counter++ }
+        while (current != null) {
+            counter++
+            current = current.next
+        }
         println("Size: $counter")
         return counter
     }
 
     override fun toString(): String {
         val stringBuilder = StringBuilder()
-        var current = head
-        forEach { stringBuilder.append("${current?.data} -> ") }
+        forEach { stringBuilder.append("${it.data} -> ") }
         stringBuilder.append("Done")
         return stringBuilder.toString()
     }
+
 }
