@@ -8,20 +8,26 @@ fun main() {
     list.add(30);
     list.add(40);
     list.display();
-//
-//    list.delete(30)
-//    list.display();
-//
-//    list.push(30)
-//    list.display()
-//
-//    list.insert(25,3)
-//    list.display()
-//
+    list.size()
+
+    list.delete(30)
+    list.display();
+    list.size()
+
+
+    list.push(30)
+    list.display()
+    list.size()
+
+
+    list.insert(25,3)
+    list.display()
+    list.size()
+
+
     list.deleteLast()
     list.display()
-
-   list.size()
+    list.size()
 
     println(list)
 }

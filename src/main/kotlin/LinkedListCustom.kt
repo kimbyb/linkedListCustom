@@ -3,6 +3,7 @@ package org.example
 class LinkedListCustom<T> : LinkedListInterface<T> {
 
     private var head: Node<T>? = null
+    private var listSize: Int = 0
 
     private fun forEach(action: (Node<T>) -> Unit) {
         var current = head
@@ -27,6 +28,7 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             }
             current?.next = newNode
         }
+        listSize++
     }
 
     //Adds to beginning
@@ -34,6 +36,7 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
         val newNode = Node(value)
         newNode.next = head
         head = newNode
+        listSize++
     }
 
     //Adds on index
@@ -55,6 +58,7 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             newNode.next = current?.next
             current?.next = newNode
         }
+        listSize++
     }
 
     //Display the list
@@ -78,6 +82,7 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             }
             current = current.next
         }
+        listSize--
     }
 
     fun deleteLast() {
@@ -95,20 +100,14 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             current = current.next
         }
         current?.next = null
+        listSize--
     }
 
 
     //Size of the list
     override fun size(): Int {
-        var counter = 0
-        var current = head
-
-        while (current != null) {
-            counter++
-            current = current.next
-        }
-        println("Size: $counter")
-        return counter
+        println("Size: $listSize")
+        return listSize
     }
 
     override fun toString(): String {
