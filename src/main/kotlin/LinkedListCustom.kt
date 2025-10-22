@@ -3,6 +3,7 @@ package org.example
 class LinkedListCustom<T> : LinkedListInterface<T> {
 
     private var head: Node<T>? = null
+    private var tail: Node<T>? = null;
     private var listSize: Int = 0
 
     private fun forEach(action: (Node<T>) -> Unit) {
@@ -21,12 +22,10 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
         val newNode = Node(value)
         if (head == null) {
             head = newNode
+            tail = newNode
         } else {
-            var current = head
-            while (current?.next != null) {
-                current = current.next
-            }
-            current?.next = newNode
+            tail?.next = newNode
+            tail = newNode
         }
         listSize++
     }
@@ -70,28 +69,36 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
 
     //Deletes value from list
     override fun delete(value: T) {
+        if (head == null) return
+
         if (head?.data == value) {
             head = head?.next
+            if (head == null) tail = null  // list became empty
+            listSize--
             return
         }
+
         var current = head
         while (current?.next != null) {
             if (current.next?.data == value) {
+                if (current.next == tail) {
+                    tail = current
+                }
                 current.next = current.next?.next
+                listSize--
                 return
             }
             current = current.next
         }
-        listSize--
     }
 
     fun deleteLast() {
-        if (head == null) {
-            return
-        }
+        if (head == null) return
 
         if (head?.next == null) {
             head = null
+            tail = null
+            listSize--
             return
         }
 
@@ -100,9 +107,9 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
             current = current.next
         }
         current?.next = null
+        tail = current
         listSize--
     }
-
 
     //Size of the list
     override fun size(): Int {
@@ -116,5 +123,4 @@ class LinkedListCustom<T> : LinkedListInterface<T> {
         stringBuilder.append("Done")
         return stringBuilder.toString()
     }
-
 }
